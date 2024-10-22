@@ -36,6 +36,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
+    @SuppressWarnings("checkstyle:LambdaBodyLength")
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -102,7 +103,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     if (evt.getSource().equals(logOut)) {
                         // TODO: execute the logout use case through the Controller
                         // 1. get the state out of the loggedInViewModel. It contains the username.
+                        final LoggedInState currentState = loggedInViewModel.getState();
+
                         // 2. Execute the logout Controller.
+                        this.logoutController.execute(currentState.getUsername());
                     }
                 }
         );
@@ -139,5 +143,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         // TODO: save the logout controller in the instance variable.
+        this.logoutController = logoutController;
     }
 }
